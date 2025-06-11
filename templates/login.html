@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>로그인 / 로그아웃</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 400px;
+      margin: 50px auto;
+    }
+    input {
+      display: block;
+      margin: 10px 0;
+      padding: 8px;
+      width: 100%;
+    }
+    button {
+      margin-top: 10px;
+      padding: 10px;
+      width: 100%;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+    }
+    #logout-section {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>로그인</h2>
+  <div id="login-section">
+    <form id="login-form">
+      <input type="email" id="email" placeholder="이메일" required>
+      <input type="password" id="password" placeholder="비밀번호" required>
+      <button type="submit">로그인</button>
+    </form>
+  </div>
+
+  <div id="logout-section">
+    <p>로그인되었습니다.</p>
+    <button id="logout-button">로그아웃</button>
+  </div>
+
+  <script>
+    const loginForm = document.getElementById('login-form');
+    const logoutSection = document.getElementById('logout-section');
+    const loginSection = document.getElementById('login-section');
+    const logoutButton = document.getElementById('logout-button');
+
+    const API_LOGIN_URL = '/api/token/'; // Django Simple JWT 로그인 엔드포인트
+    const API_LOGOUT_URL = '/api/token/blacklist/'; // 로그아웃 (블랙리스트 추가)
+
+    loginForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      const response = await fetch(API_LOGIN_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        localStorage.setItem('access_token', data.access);
+        localStorage.setItem('refresh_token', data.refresh);
+        alert('로그인 성공');
+        loginSection.style.display = 'none';
+        logoutSection.style.display = 'block';
+      } else {
+        alert('로그인 실패');
+      }
+    });
+
+    logoutButton.addEventListener('click', async () => {
+      const refresh = localStorage.getItem('refresh_token');
+      if (!refresh) return;
+
+      await fetch(API_LOGOUT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ refresh })
+      });
+
+      localStorage.removeItem('access_token');
+      localStorage.removeItem('refresh_token');
+      alert('로그아웃 되었습니다.');
+
+      loginSection.style.display = 'block';
+      logoutSection.style.display = 'none';
+    });
+  </script>
+</body>
+</html>
