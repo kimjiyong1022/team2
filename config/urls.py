@@ -3,6 +3,7 @@ from drf_yasg import openapi
 from rest_framework import permissions
 from django.contrib import admin
 from django.urls import path, include
+
 from drf_spectacular.views import (
     SpectacularAPIView,
     SpectacularRedocView,
@@ -40,4 +41,5 @@ urlpatterns = [
     path('api/token/blacklist/', TokenBlacklistView.as_view()),
     path('admin/', admin.site.urls),
     path('', include('yourapp.urls')),
+    path('accounts/', include('accounts.urls')),
 ]
