@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
+    'users',
+    'accounts',
+    "drf_spectacular"
 ]
 
 MIDDLEWARE = [
@@ -76,7 +79,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "django",
+        "NAME": "team2",
         "USER": "root",
         "PASSWORD": "password1234",
         "HOST": "127.0.0.1",
@@ -110,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = "en-us"
+LANGUAGE_CODE = "ko-kr"
 
 TIME_ZONE = "UTC"
 
@@ -134,6 +137,13 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     )
 }
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Django Mini Project API',
+    'DESCRIPTION': 'Django Mini Project At OZcodingSchool',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+}
+
 SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
 }
@@ -143,3 +153,4 @@ import datetime
 JWT_SECRET = SECRET_KEY  # 또는 os.environ.get("JWT_SECRET")
 JWT_ALGORITHM = 'HS256'
 JWT_EXP_DELTA_SECONDS = 3600  # 토큰 유효시간 (초 단위)
+AUTH_USER_MODEL = 'users.User'
