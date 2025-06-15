@@ -39,4 +39,4 @@
 - **Post 1:N Comment**
   - 한 개의 게시물에는 여러 개의 댓글이 달릴 수 있습니다.
 
-![img.png](img.png)
+![erd.png](erd.png)
