@@ -1,7 +1,6 @@
 # 프로젝트 ERD
 
-
-![ERD](docs/erd.png)
+![ERD](/Users/gimjiyong/Downloads/erd.png)
 
 ## 테이블 설명
 
