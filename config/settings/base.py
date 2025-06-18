@@ -154,3 +154,4 @@ JWT_SECRET = SECRET_KEY  # 또는 os.environ.get("JWT_SECRET")
 JWT_ALGORITHM = 'HS256'
 JWT_EXP_DELTA_SECONDS = 3600  # 토큰 유효시간 (초 단위)
 AUTH_USER_MODEL = 'users.User'
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
